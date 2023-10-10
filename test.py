@@ -2,4 +2,4 @@
 # 입력(수정) 다 한 다음 commit 버튼 클릭 - 메모 남기기 - commit 클릭
 # push (처음 할 때 아이디 및 토큰 입력)
 print('Hello git!')
-print('Hello Jeju')
+print('Hello Jeju~~~')
