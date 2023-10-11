@@ -56,15 +56,25 @@ df_titles = pd.DataFrame()
 for l in range(6):
     section_url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}'.format(l)  # 섹션 url
     titles = []
-    for k in range(1,3): #pages[l]+1):
+    for k in range(1, pages[l]+1):
         url = section_url + '#&date=%2000:00:00&page={}'.format(k)
         driver.get(url)
         time.sleep(0.5) # 새로운 페이지를 불러오는데 시간이 걸리니까
         for i in range(1,5):
             for j in range(1,6):
-                title = driver.find_element('xpath','//*[@id="section_body"]/ul[{}]/li[{}]/dl/dt[2]/a'.format(i,j)).text
-                title = re.compile('[^가-힣]').sub(' ', title)
-                titles.append(titles)
+                try:
+                    title = driver.find_element('xpath','//*[@id="section_body"]/ul[{}]/li[{}]/dl/dt[2]/a'.format(i,j)).text
+                    title = re.compile('[^가-힣]').sub(' ', title)
+                    titles.append(title)
+                except:
+                    print('error {} {} {} {}'.format(l, k, i ,j))
+
+        if k%10 == 0:
+            df_section_title = pd.DataFrame(titles, columns=['titles'])
+            df_section_title['category'] = category[l]
+            df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
+            df_titles.to_csv('./crawling_data/crawling_data_{}_{}.csv'.format(l,k), index=False)
+            titles = []
     df_section_title = pd.DataFrame(titles, columns=['titles'])
     df_section_title['category'] = category[l]
     df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
@@ -80,3 +90,6 @@ print(df_titles['category'].value_counts())
 # selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
 # 에러 발생: 크롤릴 하려했는데 페이지가 안 바꼈다! => 딜레이를 줘야지 뭐
 
+# 팀프로젝트
+# 팀장의 깃허브에 들어가 포크 누르고 creat하면 내 레포짓테리에 복사가 됨
+# (forked from vb0o0dv/news_category_classification_intel_season1)
