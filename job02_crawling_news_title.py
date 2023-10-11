@@ -64,7 +64,7 @@ for l in range(6):
             for j in range(1,6):
                 try:
                     title = driver.find_element('xpath','//*[@id="section_body"]/ul[{}]/li[{}]/dl/dt[2]/a'.format(i,j)).text
-                    title = re.compile('[^가-힣]').sub(' ', title)
+                    title = re.compile('[^가-힣|a-z|A-Z|0-9]').sub(' ', title)
                     titles.append(title)
                 except:
                     print('error {} {} {} {}'.format(l, k, i ,j))
@@ -78,6 +78,7 @@ for l in range(6):
     df_section_title = pd.DataFrame(titles, columns=['titles'])
     df_section_title['category'] = category[l]
     df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
+
 df_titles.to_csv('./crawling_data/crawling_data.csv', index=False)
 
 
