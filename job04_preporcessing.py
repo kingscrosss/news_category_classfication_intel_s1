@@ -97,5 +97,6 @@ print(X_test.shape, Y_test.shape)
 xy = X_train, X_test, Y_train, Y_test
 np.save('./crawling_data/news_data_max_{}_wordsize_{}'.format(max, wordsize), xy)
 
+# 데이터 파일은 commit하지 말 것. 100MB 넘는건 안 올리고 구글드라이브에 저장하고 링크를 따로 걸어준다.
 
 
