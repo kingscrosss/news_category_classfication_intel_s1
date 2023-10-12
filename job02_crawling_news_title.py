@@ -72,19 +72,21 @@ for l in range(6):
         if k%10 == 0:
             df_section_title = pd.DataFrame(titles, columns=['titles'])
             df_section_title['category'] = category[l]
-            df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
+            # df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)     # 이전 df에 이어붙임. 즉 파일이 10k 단위로 안 나눠지고 계속 이어붙여서 저장이됨
             df_titles.to_csv('./crawling_data/crawling_data_{}_{}.csv'.format(l,k), index=False)
             titles = []
     df_section_title = pd.DataFrame(titles, columns=['titles'])
     df_section_title['category'] = category[l]
-    df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
+    # df_titles = pd.concat([df_titles, df_section_title], ignore_index=True)
+    df_titles.to_csv('./crawling_data/crawling_data_KEN.csv', index=False)
 
-df_titles.to_csv('./crawling_data/crawling_data.csv', index=False)
+# df_titles.to_csv('./crawling_data/crawling_data_KEN.csv', index=False)
+driver.close()
+# 파일 저장을 나눠서 저장하는 방식으로 수정함.
 
-
-print(df_titles.head())
-df_titles.info()
-print(df_titles['category'].value_counts())
+# print(df_titles.head())
+# df_titles.info()
+# print(df_titles['category'].value_counts())
 
 # print(titles)
 # print(len(titles))
